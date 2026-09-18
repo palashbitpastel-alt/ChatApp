@@ -6,7 +6,9 @@ import ChatHeader from "./ChatHeader";
 import MessageBubble from "./MessageBubble";
 import ChatInput from "./ChatInput";
 import { useSocket } from "@/lib/socket";
-import { Lock, ShieldCheck, Laptop } from "lucide-react";
+import { Lock } from "lucide-react";
+import { BrandMark } from "@/components/brand/BrandLogo";
+import { APP_NAME } from "@/lib/brand";
 
 interface ChatWindowProps {
   chat: ChatItem | null;
@@ -167,21 +169,18 @@ export default function ChatWindow({
   // 1. Empty State (when no chat is selected)
   if (!chat) {
     return (
-      <main className="flex-1 hidden md:flex flex-col items-center justify-center bg-[#222e35]/30 border-b-[6px] border-[#00a884] p-8 text-center select-none wa-chat-bg">
+      <main className="flex-1 hidden md:flex flex-col items-center justify-center p-8 text-center select-none chat-bg">
         <div className="max-w-md space-y-4">
-          <div className="w-20 h-20 mx-auto rounded-full bg-[#202c33] flex items-center justify-center text-[#00a884] shadow-inner mb-4">
-            <Laptop className="w-10 h-10" />
-          </div>
+          <BrandMark className="w-16 h-16 mx-auto mb-4" />
 
-          <h2 className="text-2xl font-light text-[#e9edef]">WhatsApp Web</h2>
-          <p className="text-sm text-[#8696a0] leading-relaxed">
-            Send and receive messages in real time. Built with Next.js, Socket.io, and
-            PostgreSQL. Ready to deploy on Railway with persistent WebSockets.
+          <h2 className="text-2xl font-semibold tracking-tight text-[#e8eaf0]">{APP_NAME}</h2>
+          <p className="text-sm text-[#8b93a7] leading-relaxed">
+            Select a conversation from the list, or start a new chat to begin messaging.
           </p>
 
-          <div className="pt-6 flex items-center justify-center space-x-2 text-xs text-[#8696a0]">
-            <Lock className="w-3.5 h-3.5 text-[#8696a0]" />
-            <span>End-to-end encrypted real-time messages</span>
+          <div className="pt-6 flex items-center justify-center space-x-2 text-xs text-[#8b93a7]">
+            <Lock className="w-3.5 h-3.5 text-[#8b93a7]" />
+            <span>Messages are delivered instantly over a secure connection</span>
           </div>
         </div>
       </main>
@@ -190,29 +189,28 @@ export default function ChatWindow({
 
   // 2. Active Chat Window
   return (
-    <main className="flex-1 flex flex-col h-full bg-[#0b141a] overflow-hidden relative">
+    <main className="flex-1 flex flex-col h-full bg-[#0b0d12] overflow-hidden relative">
       {/* Header */}
       <ChatHeader
         chat={chat}
         currentUser={currentUser}
         onBackMobile={onBackMobile}
-        onOpenDetails={() => {}}
       />
 
       {/* Messages Scroll Area */}
-      <div className="flex-1 overflow-y-auto wa-chat-bg p-2 sm:p-4 space-y-2">
+      <div className="flex-1 overflow-y-auto chat-bg p-2 sm:p-4 space-y-2">
         {/* Encryption notice banner */}
         <div className="flex justify-center my-3">
-          <div className="bg-[#182229] border border-[#222e35] rounded-lg px-3 py-1.5 flex items-center space-x-2 text-[11px] text-[#ffd279] shadow-sm max-w-sm text-center">
+          <div className="bg-[#161a22] border border-[#262b36] rounded-lg px-3 py-1.5 flex items-center space-x-2 text-[11px] text-[#ffd279] shadow-sm max-w-sm text-center">
             <Lock className="w-3 h-3 flex-shrink-0" />
             <span>Messages are secured with real-time WebSocket protocol.</span>
           </div>
         </div>
 
         {loading ? (
-          <div className="py-12 text-center text-xs text-[#8696a0]">Loading messages...</div>
+          <div className="py-12 text-center text-xs text-[#8b93a7]">Loading messages...</div>
         ) : messages.length === 0 ? (
-          <div className="py-12 text-center text-xs text-[#8696a0]">
+          <div className="py-12 text-center text-xs text-[#8b93a7]">
             No messages here yet. Send a message to start the conversation!
           </div>
         ) : (

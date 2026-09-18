@@ -4,6 +4,33 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
+  // Rewrite legacy demo copy left in databases seeded by older versions (idempotent)
+  const legacyText: Record<string, string> = {
+    "Hey Alice! Are we deploying the new WhatsApp clone to Railway today?":
+      "Hey Alice! Are we shipping the new release today?",
+    "Yes! Next.js fullstack with WebSockets is ready to deploy! 🚀":
+      "Yes! Everything is tested and ready to go 🚀",
+    "Welcome everyone to the WhatsApp Clone Dev Team! Admin dashboard & WebSockets are active.":
+      "Welcome to the team channel! Use this group for announcements and updates.",
+    "UI looks sleek! Dark mode matches WhatsApp Web perfectly.":
+      "Thanks! Looking forward to working with everyone.",
+  };
+  for (const [from, to] of Object.entries(legacyText)) {
+    await prisma.message.updateMany({ where: { content: from }, data: { content: to } });
+  }
+  await prisma.chat.updateMany({ where: { name: "🚀 Dev Team Announcements" }, data: { name: "Team Announcements" } });
+  await prisma.user.updateMany({
+    where: { statusMessage: "Hey there! I am using WhatsApp." },
+    data: { statusMessage: "Available" },
+  });
+
+  // Set SEED_DEMO_DATA=false to stop (re)creating the sample accounts and chats,
+  // e.g. once real users are on the site and the sample accounts have been deleted.
+  if (process.env.SEED_DEMO_DATA === "false") {
+    console.log("⏭️  SEED_DEMO_DATA=false, skipping sample data");
+    return;
+  }
+
   console.log("🌱 Seeding database...");
 
   // Password hashes
@@ -88,7 +115,7 @@ async function main() {
     data: {
       chatId: directChat.id,
       senderId: bob.id,
-      content: "Hey Alice! Are we deploying the new WhatsApp clone to Railway today?",
+      content: "Hey Alice! Are we shipping the new release today?",
       status: MessageStatus.READ,
       createdAt: new Date(Date.now() - 3600000 * 2), // 2 hours ago
     },
@@ -98,7 +125,7 @@ async function main() {
     data: {
       chatId: directChat.id,
       senderId: alice.id,
-      content: "Yes! Next.js fullstack with WebSockets is ready to deploy! 🚀",
+      content: "Yes! Everything is tested and ready to go 🚀",
       status: MessageStatus.READ,
       createdAt: new Date(Date.now() - 3600000), // 1 hour ago
     },
@@ -113,11 +140,11 @@ async function main() {
     },
   });
 
-  // 3. Create Group Chat: "Project Dev Team"
+  // 3. Create Group Chat: "Team Announcements"
   const groupChat = await prisma.chat.create({
     data: {
       isGroup: true,
-      name: "🚀 Dev Team Announcements",
+      name: "Team Announcements",
       avatarUrl: "https://api.dicebear.com/7.x/identicon/svg?seed=devteam",
       participants: {
         create: [
@@ -134,7 +161,7 @@ async function main() {
     data: {
       chatId: groupChat.id,
       senderId: adminUser.id,
-      content: "Welcome everyone to the WhatsApp Clone Dev Team! Admin dashboard & WebSockets are active.",
+      content: "Welcome to the team channel! Use this group for announcements and updates.",
       status: MessageStatus.DELIVERED,
       createdAt: new Date(Date.now() - 1800000), // 30 mins ago
     },
@@ -144,7 +171,7 @@ async function main() {
     data: {
       chatId: groupChat.id,
       senderId: charlie.id,
-      content: "UI looks sleek! Dark mode matches WhatsApp Web perfectly.",
+      content: "Thanks! Looking forward to working with everyone.",
       status: MessageStatus.DELIVERED,
       createdAt: new Date(Date.now() - 600000), // 10 mins ago
     },

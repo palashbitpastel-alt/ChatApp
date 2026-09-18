@@ -74,9 +74,9 @@ export default function Sidebar({
   });
 
   return (
-    <aside className="w-full md:w-[380px] lg:w-[420px] flex-shrink-0 bg-[#111b21] border-r border-[#222e35] flex flex-col h-full select-none">
+    <aside className="w-full md:w-[380px] lg:w-[420px] flex-shrink-0 bg-[#11141b] border-r border-[#262b36] flex flex-col h-full select-none">
       {/* 1. Header */}
-      <div className="bg-[#202c33] px-4 py-2.5 flex items-center justify-between border-b border-[#222e35] z-10">
+      <div className="bg-[#1a1e27] px-4 py-2.5 flex items-center justify-between border-b border-[#262b36] z-10">
         {/* User avatar & profile trigger */}
         <button
           onClick={onOpenProfile}
@@ -89,7 +89,7 @@ export default function Sidebar({
               <img
                 src={currentUser.avatarUrl}
                 alt={currentUser.username}
-                className="w-10 h-10 rounded-full object-cover ring-2 ring-transparent group-hover:ring-[#00a884] transition-all"
+                className="w-10 h-10 rounded-full object-cover ring-2 ring-transparent group-hover:ring-[#6366f1] transition-all"
               />
             ) : (
               <div
@@ -100,23 +100,23 @@ export default function Sidebar({
                 {getInitials(currentUser?.username || "Me")}
               </div>
             )}
-            <span className="absolute bottom-0 right-0 w-3 h-3 bg-[#00a884] border-2 border-[#202c33] rounded-full" />
+            <span className="absolute bottom-0 right-0 w-3 h-3 bg-[#6366f1] border-2 border-[#1a1e27] rounded-full" />
           </div>
           <div className="hidden sm:block">
-            <p className="text-sm font-medium text-[#e9edef] leading-tight">
+            <p className="text-sm font-medium text-[#e8eaf0] leading-tight">
               {currentUser?.username}
             </p>
-            <p className="text-[11px] text-[#00a884] leading-tight">online</p>
+            <p className="text-[11px] text-[#818cf8] leading-tight">online</p>
           </div>
         </button>
 
         {/* Action icons */}
-        <div className="flex items-center space-x-1 text-[#aebac1] relative">
+        <div className="flex items-center space-x-1 text-[#b4bac8] relative">
           {/* Admin Dashboard shortcut if admin */}
           {currentUser?.role === "ADMIN" && (
             <Link
               href="/admin"
-              className="p-2 hover:bg-[#374248] rounded-full transition-colors text-[#00a884]"
+              className="p-2 hover:bg-[#353b4a] rounded-full transition-colors text-[#818cf8]"
               title="Admin Dashboard"
             >
               <Shield className="w-5 h-5" />
@@ -126,7 +126,7 @@ export default function Sidebar({
           {/* New Group button */}
           <button
             onClick={onOpenNewGroup}
-            className="p-2 hover:bg-[#374248] rounded-full transition-colors"
+            className="p-2 hover:bg-[#353b4a] rounded-full transition-colors"
             title="New Group"
           >
             <Users className="w-5 h-5" />
@@ -135,7 +135,7 @@ export default function Sidebar({
           {/* New Chat button */}
           <button
             onClick={onOpenNewChat}
-            className="p-2 hover:bg-[#374248] rounded-full transition-colors"
+            className="p-2 hover:bg-[#353b4a] rounded-full transition-colors"
             title="New Chat"
           >
             <MessageSquarePlus className="w-5 h-5" />
@@ -145,7 +145,7 @@ export default function Sidebar({
           <div className="relative">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="p-2 hover:bg-[#374248] rounded-full transition-colors"
+              className="p-2 hover:bg-[#353b4a] rounded-full transition-colors"
               title="Menu"
             >
               <MoreVertical className="w-5 h-5" />
@@ -157,13 +157,13 @@ export default function Sidebar({
                   className="fixed inset-0 z-40"
                   onClick={() => setMenuOpen(false)}
                 />
-                <div className="absolute right-0 mt-2 w-48 bg-[#233138] border border-[#2e3b43] rounded-lg shadow-xl py-1 z-50 animate-in fade-in zoom-in-95">
+                <div className="absolute right-0 mt-2 w-48 bg-[#1f2430] border border-[#2c3240] rounded-lg shadow-xl py-1 z-50 animate-in fade-in zoom-in-95">
                   <button
                     onClick={() => {
                       setMenuOpen(false);
                       onOpenNewGroup();
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-[#d1d7db] hover:bg-[#182229] transition-colors"
+                    className="w-full text-left px-4 py-2 text-sm text-[#d4d8e1] hover:bg-[#161a22] transition-colors"
                   >
                     New Group
                   </button>
@@ -172,25 +172,25 @@ export default function Sidebar({
                       setMenuOpen(false);
                       onOpenProfile();
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-[#d1d7db] hover:bg-[#182229] transition-colors"
+                    className="w-full text-left px-4 py-2 text-sm text-[#d4d8e1] hover:bg-[#161a22] transition-colors"
                   >
                     Profile
                   </button>
                   {currentUser?.role === "ADMIN" && (
                     <Link
                       href="/admin"
-                      className="block px-4 py-2 text-sm text-[#00a884] hover:bg-[#182229] transition-colors"
+                      className="block px-4 py-2 text-sm text-[#818cf8] hover:bg-[#161a22] transition-colors"
                     >
                       Admin Dashboard
                     </Link>
                   )}
-                  <hr className="my-1 border-[#2e3b43]" />
+                  <hr className="my-1 border-[#2c3240]" />
                   <button
                     onClick={() => {
                       setMenuOpen(false);
                       onLogout();
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-rose-400 hover:bg-[#182229] flex items-center space-x-2 transition-colors"
+                    className="w-full text-left px-4 py-2 text-sm text-rose-400 hover:bg-[#161a22] flex items-center space-x-2 transition-colors"
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Log out</span>
@@ -203,15 +203,15 @@ export default function Sidebar({
       </div>
 
       {/* 2. Search & Filter Section */}
-      <div className="p-2.5 bg-[#111b21] space-y-2 border-b border-[#222e35]">
-        <div className="relative bg-[#202c33] rounded-lg flex items-center px-3 py-1.5 focus-within:ring-1 focus-within:ring-[#00a884] transition-all">
-          <Search className="w-4 h-4 text-[#8696a0] mr-2 flex-shrink-0" />
+      <div className="p-2.5 bg-[#11141b] space-y-2 border-b border-[#262b36]">
+        <div className="relative bg-[#1a1e27] rounded-lg flex items-center px-3 py-1.5 focus-within:ring-1 focus-within:ring-[#6366f1] transition-all">
+          <Search className="w-4 h-4 text-[#8b93a7] mr-2 flex-shrink-0" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search or start new chat"
-            className="bg-transparent text-sm text-[#e9edef] placeholder-[#8696a0] outline-none w-full"
+            placeholder="Search conversations"
+            className="bg-transparent text-sm text-[#e8eaf0] placeholder-[#8b93a7] outline-none w-full"
           />
         </div>
 
@@ -221,8 +221,8 @@ export default function Sidebar({
             onClick={() => setFilter("ALL")}
             className={`px-3 py-1 text-xs rounded-full font-medium transition-colors ${
               filter === "ALL"
-                ? "bg-[#00a884]/20 text-[#00a884] font-semibold"
-                : "bg-[#202c33] text-[#8696a0] hover:text-[#d1d7db]"
+                ? "bg-[#6366f1]/20 text-[#818cf8] font-semibold"
+                : "bg-[#1a1e27] text-[#8b93a7] hover:text-[#d4d8e1]"
             }`}
           >
             All
@@ -231,8 +231,8 @@ export default function Sidebar({
             onClick={() => setFilter("UNREAD")}
             className={`px-3 py-1 text-xs rounded-full font-medium transition-colors ${
               filter === "UNREAD"
-                ? "bg-[#00a884]/20 text-[#00a884] font-semibold"
-                : "bg-[#202c33] text-[#8696a0] hover:text-[#d1d7db]"
+                ? "bg-[#6366f1]/20 text-[#818cf8] font-semibold"
+                : "bg-[#1a1e27] text-[#8b93a7] hover:text-[#d4d8e1]"
             }`}
           >
             Unread
@@ -241,8 +241,8 @@ export default function Sidebar({
             onClick={() => setFilter("GROUPS")}
             className={`px-3 py-1 text-xs rounded-full font-medium transition-colors ${
               filter === "GROUPS"
-                ? "bg-[#00a884]/20 text-[#00a884] font-semibold"
-                : "bg-[#202c33] text-[#8696a0] hover:text-[#d1d7db]"
+                ? "bg-[#6366f1]/20 text-[#818cf8] font-semibold"
+                : "bg-[#1a1e27] text-[#8b93a7] hover:text-[#d4d8e1]"
             }`}
           >
             Groups
@@ -251,12 +251,12 @@ export default function Sidebar({
       </div>
 
       {/* 3. Chat List */}
-      <div className="flex-1 overflow-y-auto divide-y divide-[#202c33]/40">
+      <div className="flex-1 overflow-y-auto divide-y divide-[#1a1e27]/40">
         {filteredChats.length === 0 ? (
-          <div className="py-12 text-center text-sm text-[#8696a0] px-6">
-            <CircleDot className="w-8 h-8 mx-auto mb-2 text-[#8696a0]/40" />
+          <div className="py-12 text-center text-sm text-[#8b93a7] px-6">
+            <CircleDot className="w-8 h-8 mx-auto mb-2 text-[#8b93a7]/40" />
             <p>No chats found.</p>
-            <p className="text-xs mt-1 text-[#8696a0]/80">
+            <p className="text-xs mt-1 text-[#8b93a7]/80">
               Start a new conversation by clicking the message icon above.
             </p>
           </div>
@@ -278,8 +278,8 @@ export default function Sidebar({
                 onClick={() => onSelectChat(chat)}
                 className={`flex items-center px-3 py-3 cursor-pointer transition-colors ${
                   isSelected
-                    ? "bg-[#2a3942]"
-                    : "hover:bg-[#202c33] active:bg-[#222e35]"
+                    ? "bg-[#232835]"
+                    : "hover:bg-[#1a1e27] active:bg-[#262b36]"
                 }`}
               >
                 {/* Avatar */}
@@ -290,7 +290,7 @@ export default function Sidebar({
                       <img
                         src={chat.avatarUrl}
                         alt={displayName || "Group"}
-                        className="w-12 h-12 rounded-full object-cover bg-[#202c33]"
+                        className="w-12 h-12 rounded-full object-cover bg-[#1a1e27]"
                       />
                     ) : (
                       <div className="w-12 h-12 rounded-full bg-emerald-700 flex items-center justify-center text-white">
@@ -302,7 +302,7 @@ export default function Sidebar({
                     <img
                       src={other.avatarUrl}
                       alt={displayName || "User"}
-                      className="w-12 h-12 rounded-full object-cover bg-[#202c33]"
+                      className="w-12 h-12 rounded-full object-cover bg-[#1a1e27]"
                     />
                   ) : (
                     <div
@@ -316,21 +316,21 @@ export default function Sidebar({
 
                   {/* Presence indicator for direct chats */}
                   {!chat.isGroup && isOnline && (
-                    <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-[#00a884] border-2 border-[#111b21] rounded-full" />
+                    <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-[#6366f1] border-2 border-[#11141b] rounded-full" />
                   )}
                 </div>
 
                 {/* Content details */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[#e9edef] font-medium text-sm truncate">
+                    <span className="text-[#e8eaf0] font-medium text-sm truncate">
                       {displayName}
                     </span>
                     <span
                       className={`text-[11px] ${
                         (chat.unreadCount || 0) > 0
-                          ? "text-[#00a884] font-semibold"
-                          : "text-[#8696a0]"
+                          ? "text-[#818cf8] font-semibold"
+                          : "text-[#8b93a7]"
                       }`}
                     >
                       {formatChatTimestamp(lastMsg?.createdAt || chat.updatedAt)}
@@ -338,10 +338,10 @@ export default function Sidebar({
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center text-xs text-[#8696a0] truncate space-x-1">
+                    <div className="flex items-center text-xs text-[#8b93a7] truncate space-x-1">
                       {/* Typing indicator */}
                       {isTyping ? (
-                        <span className="text-[#00a884] font-medium animate-pulse">
+                        <span className="text-[#818cf8] font-medium animate-pulse">
                           {chat.isGroup ? `${typingUser} is typing...` : "typing..."}
                         </span>
                       ) : (
@@ -350,11 +350,11 @@ export default function Sidebar({
                           {isSender && lastMsg && (
                             <span className="flex-shrink-0">
                               {lastMsg.status === "READ" ? (
-                                <CheckCheck className="w-4 h-4 text-[#53bdeb]" />
+                                <CheckCheck className="w-4 h-4 text-[#7dd3fc]" />
                               ) : lastMsg.status === "DELIVERED" ? (
-                                <CheckCheck className="w-4 h-4 text-[#8696a0]" />
+                                <CheckCheck className="w-4 h-4 text-[#8b93a7]" />
                               ) : (
-                                <Check className="w-4 h-4 text-[#8696a0]" />
+                                <Check className="w-4 h-4 text-[#8b93a7]" />
                               )}
                             </span>
                           )}
@@ -372,7 +372,7 @@ export default function Sidebar({
 
                     {/* Unread badge */}
                     {(chat.unreadCount || 0) > 0 && (
-                      <span className="ml-2 flex-shrink-0 bg-[#00a884] text-[#111b21] font-bold text-[11px] h-5 min-w-[20px] px-1.5 rounded-full flex items-center justify-center">
+                      <span className="ml-2 flex-shrink-0 bg-[#6366f1] text-[#11141b] font-bold text-[11px] h-5 min-w-[20px] px-1.5 rounded-full flex items-center justify-center">
                         {chat.unreadCount}
                       </span>
                     )}

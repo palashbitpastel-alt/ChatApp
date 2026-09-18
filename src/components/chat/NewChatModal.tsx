@@ -71,39 +71,39 @@ export default function NewChatModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-[#111b21] border border-[#222e35] rounded-xl w-full max-w-md overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+      <div className="bg-[#11141b] border border-[#262b36] rounded-xl w-full max-w-md overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-150">
         {/* Header */}
-        <div className="bg-[#202c33] px-4 py-3.5 flex items-center justify-between border-b border-[#222e35]">
-          <h2 className="text-[#e9edef] font-medium text-lg">New Chat</h2>
+        <div className="bg-[#1a1e27] px-4 py-3.5 flex items-center justify-between border-b border-[#262b36]">
+          <h2 className="text-[#e8eaf0] font-medium text-lg">New Chat</h2>
           <button
             onClick={onClose}
-            className="text-[#aebac1] hover:text-white p-1 rounded-full hover:bg-[#2a3942] transition-colors"
+            className="text-[#b4bac8] hover:text-white p-1 rounded-full hover:bg-[#232835] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Search */}
-        <div className="p-3 bg-[#111b21] border-b border-[#222e35]">
-          <div className="relative bg-[#202c33] rounded-lg flex items-center px-3 py-1.5 focus-within:ring-1 focus-within:ring-[#00a884]">
-            <Search className="w-4 h-4 text-[#8696a0] mr-2 flex-shrink-0" />
+        <div className="p-3 bg-[#11141b] border-b border-[#262b36]">
+          <div className="relative bg-[#1a1e27] rounded-lg flex items-center px-3 py-1.5 focus-within:ring-1 focus-within:ring-[#6366f1]">
+            <Search className="w-4 h-4 text-[#8b93a7] mr-2 flex-shrink-0" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by username or phone number..."
-              className="bg-transparent text-sm text-[#e9edef] placeholder-[#8696a0] outline-none w-full"
+              className="bg-transparent text-sm text-[#e8eaf0] placeholder-[#8b93a7] outline-none w-full"
               autoFocus
             />
           </div>
         </div>
 
         {/* User List */}
-        <div className="max-h-80 overflow-y-auto divide-y divide-[#202c33]/50">
+        <div className="max-h-80 overflow-y-auto divide-y divide-[#1a1e27]/50">
           {isLoading ? (
-            <div className="py-8 text-center text-[#8696a0] text-sm">Searching contacts...</div>
+            <div className="py-8 text-center text-[#8b93a7] text-sm">Searching contacts...</div>
           ) : users.length === 0 ? (
-            <div className="py-8 text-center text-[#8696a0] text-sm">
+            <div className="py-8 text-center text-[#8b93a7] text-sm">
               No contacts found matching &ldquo;{search}&rdquo;
             </div>
           ) : (
@@ -112,14 +112,14 @@ export default function NewChatModal({
                 key={u.id}
                 onClick={() => handleSelectUser(u)}
                 disabled={creating}
-                className="w-full text-left px-4 py-3 flex items-center space-x-3 hover:bg-[#202c33] transition-colors"
+                className="w-full text-left px-4 py-3 flex items-center space-x-3 hover:bg-[#1a1e27] transition-colors"
               >
                 {u.avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={u.avatarUrl}
                     alt={u.username}
-                    className="w-11 h-11 rounded-full object-cover bg-[#202c33]"
+                    className="w-11 h-11 rounded-full object-cover bg-[#1a1e27]"
                   />
                 ) : (
                   <div
@@ -132,14 +132,14 @@ export default function NewChatModal({
                 )}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
-                    <span className="font-medium text-[#e9edef] truncate">{u.username}</span>
-                    <span className="text-xs text-[#8696a0]">{u.phone}</span>
+                    <span className="font-medium text-[#e8eaf0] truncate">{u.username}</span>
+                    <span className="text-xs text-[#8b93a7]">{u.phone}</span>
                   </div>
-                  <p className="text-xs text-[#8696a0] truncate mt-0.5">
+                  <p className="text-xs text-[#8b93a7] truncate mt-0.5">
                     {u.statusMessage || "Available"}
                   </p>
                 </div>
-                <UserCheck className="w-4 h-4 text-[#00a884] opacity-0 group-hover:opacity-100" />
+                <UserCheck className="w-4 h-4 text-[#818cf8] opacity-0 group-hover:opacity-100" />
               </button>
             ))
           )}

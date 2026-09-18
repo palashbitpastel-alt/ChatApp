@@ -1,8 +1,15 @@
 {
-  "name": "WhatsApp Web",
-  "short_name": "WhatsApp",
+  "name": "ChatApp",
+  "short_name": "ChatApp",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0b141a",
-  "theme_color": "#00a884"
+  "background_color": "#0b0d12",
+  "theme_color": "#6366f1",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
 }

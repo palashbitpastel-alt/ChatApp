@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { APP_NAME, APP_TAGLINE } from "@/lib/brand";
 
 export const metadata: Metadata = {
-  title: "WhatsApp Web",
-  description: "Real-time WhatsApp Web clone built with Next.js and WebSockets",
-  icons: {
-    icon: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg",
-  },
+  title: APP_NAME,
+  description: APP_TAGLINE,
 };
 
 export default function RootLayout({
@@ -16,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className="bg-[#0c1317] text-[#e9edef] antialiased h-dvh w-screen overflow-hidden">
+      <body className="bg-[#0b0d12] text-[#e8eaf0] antialiased h-dvh w-screen overflow-hidden">
         {children}
       </body>
     </html>

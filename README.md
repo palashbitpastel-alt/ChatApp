@@ -1,105 +1,100 @@
-# WhatsApp Web Full-Stack Clone (Next.js + Socket.io + PostgreSQL)
+# ChatApp
 
-A feature-complete WhatsApp Web clone built with **Next.js 14 (App Router)**, **Socket.io** real-time WebSockets, **Prisma ORM**, and **PostgreSQL**, styled with authentic WhatsApp Web dark theme.
+Real-time messaging web app built with **Next.js 16**, **Socket.io**, **Prisma**, and **PostgreSQL**. Next.js and the WebSocket server run in a single Node process, so the whole app deploys as one service.
 
-Designed and pre-configured for seamless 1-click deployment on **Railway**.
+## Features
 
----
+**Messaging**
+- One-on-one and group conversations, delivered instantly over WebSockets
+- Typing indicators, online presence, and "last seen" timestamps
+- Read receipts and emoji reactions
+- Emoji picker and image messages (by URL)
 
-## 🌟 Key Features
+**Administration** (`/admin`, admin accounts only)
+- Usage statistics: users, online users, messages, chats, groups
+- User moderation: search, suspend/unsuspend, promote/demote, delete
+- System-wide announcements, shown to every connected user in real time
 
-### 💬 Real-Time Messaging (Socket.io)
-- **1-on-1 Direct Messaging**: Private conversations with real-time socket delivery.
-- **Group Chats**: Create group chats with custom subject and multiple participants.
-- **Online / Offline Presence**: Live green presence indicator and "last seen" timestamps.
-- **Live Typing Status**: Real-time "*typing...*" indicator in header and chat list.
-- **Read Receipts**:
-  - Single gray tick (✓) = Message Sent.
-  - Double gray ticks (✓✓) = Message Delivered.
-  - Double blue ticks (✓✓) = Message Read.
-- **Emoji Reactions**: Hover over any message to react with emojis (👍, ❤️, 😂, 😮, 😢, 🙏).
-- **Media Attachments**: Send photos with image preview and voice note audio simulation.
+**Security**
+- Passwords hashed with bcrypt; sessions in an httpOnly JWT cookie
+- WebSocket connections authenticated with the same session cookie
+- Every socket action checks that the user is a member of the chat
+- The server refuses to start in production without a `JWT_SECRET`
 
-### 🛡️ Admin Dashboard (`/admin`)
-- **Real-Time Analytics**: Total registered users, active online WebSocket sessions, total messages sent, and group statistics.
-- **User Moderation**: View all users, search by phone or username, ban/unban bad actors, promote/demote administrator roles, or delete users.
-- **Real-Time Global Broadcast**: Compose system announcements that instantly trigger a live alert banner across all connected users' screens via WebSocket.
-- **Server Health & Telemetry**: Monitor uptime, database connection status, and deployment runtime.
+## Tech stack
 
-### 🎨 Authentic WhatsApp Web Interface
-- WhatsApp color tokens (`#00a884`, `#111b21`, `#202c33`, `#005c4b`).
-- Authentic WhatsApp doodle wallpaper background.
-- Tailored message bubbles (outgoing green, incoming dark gray).
-- Filter chats by **All**, **Unread**, or **Groups**.
-- Profile drawer with avatar, username, phone, and customizable status message.
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js 16 (App Router), React 19, Tailwind CSS |
+| Real-time | Socket.io |
+| Database | PostgreSQL via Prisma ORM |
+| Runtime | Custom Node server (`server.ts`) running Next.js + Socket.io |
 
----
-
-## 🏗️ Architecture
+## Project structure
 
 ```
-ChatApp_Clone/
-├── prisma/
-│   ├── schema.prisma         # PostgreSQL data models (User, Chat, Message, Reactions, Broadcasts)
-│   └── seed.ts               # Pre-seeded test accounts & initial chats
-├── src/
-│   ├── app/
-│   │   ├── admin/            # Admin Dashboard (Overview, Users, Broadcasts)
-│   │   ├── api/              # Next.js API Routes (Auth, Chats, Messages, Admin, Health)
-│   │   ├── login/            # WhatsApp Web Login & Register with 1-click test accounts
-│   │   ├── globals.css       # Custom styles, scrollbars, and WhatsApp chat wallpapers
-│   │   ├── layout.tsx        # HTML root layout
-│   │   └── page.tsx          # Main WhatsApp Web application
-│   ├── components/
-│   │   └── chat/             # Sidebar, ChatWindow, MessageBubble, ChatInput, Modals
-│   ├── lib/
-│   │   ├── auth.ts           # JWT authentication, bcrypt password hashing, session cookies
-│   │   ├── prisma.ts         # PrismaClient singleton instance
-│   │   ├── socket.tsx        # Client-side Socket.io Provider & Context hook
-│   │   └── utils.ts          # Helper utilities & date formatters
-│   └── types/                # TypeScript interface declarations & socket payloads
-├── server.ts                 # Unified Node server running Next.js + Socket.io
-├── Dockerfile                # Multi-stage production container
-├── railway.json              # Railway platform build & deploy configuration
-├── docker-compose.yml        # 1-click local PostgreSQL container
-└── RAILWAY_DEPLOYMENT_GUIDE.md # Complete deployment walkthrough
+prisma/
+  schema.prisma     Data model (users, chats, messages, reactions, broadcasts)
+  seed.ts           Sample accounts and conversations
+src/
+  app/              Pages (chat, login, admin) and API routes
+  components/       Chat UI and brand components
+  lib/              Auth, JWT, Prisma client, socket client, brand config
+server.ts           HTTP server: Next.js + authenticated Socket.io
+start.sh            Container entrypoint: schema sync, seed, start server
+Dockerfile          Production image
+railway.json        Railway build/deploy config
 ```
 
----
+The product name and default status text live in `src/lib/brand.ts`; the logo is `src/components/brand/BrandLogo.tsx` and the favicon is `src/app/icon.svg`.
 
-## 🚀 Quick Start (Local)
+## Running locally
 
-### 1. Start Local PostgreSQL Database
+Requirements: Node.js 20+, and PostgreSQL (or Docker).
+
 ```bash
-docker compose up -d
-```
-*(Or specify your PostgreSQL connection string in `.env`)*
-
-### 2. Push Database Schema & Seed Demo Data
-```bash
-npx prisma db push
-npm run prisma:seed
+npm install
+cp .env.example .env          # then edit values if needed
+docker compose up -d          # starts a local PostgreSQL
+npx prisma db push            # create tables
+npm run prisma:seed           # optional sample data
+npm run dev                   # http://localhost:3000
 ```
 
-### 3. Start Development Server
-```bash
-npm run dev
-```
-Visit [http://localhost:3000](http://localhost:3000).
+### Environment variables
 
----
+| Variable | Required | Description |
+|---|---|---|
+| `DATABASE_URL` | Yes | PostgreSQL connection string |
+| `JWT_SECRET` | In production | Long random string used to sign sessions (`openssl rand -hex 32`) |
+| `NODE_ENV` | Yes | `development` locally, `production` when deployed |
+| `PORT` | No | Port to listen on (default `3000`; Railway sets it automatically) |
+| `SEED_DEMO_DATA` | No | Set to `false` to stop creating the sample accounts and chats on start-up |
 
-## 🔑 Demo Accounts (Pre-Seeded)
+## Deploying to Railway
 
-| Account | Username | Phone | Password | Role | Access |
-|---|---|---|---|---|---|
-| **Admin** | `admin` | `+10000000000` | `admin123` | `ADMIN` | WhatsApp Web + Full `/admin` Dashboard |
-| **Alice** | `alice` | `+10000000001` | `password123` | `USER` | WhatsApp Web Chat |
-| **Bob** | `bob` | `+10000000002` | `password123` | `USER` | WhatsApp Web Chat |
-| **Charlie** | `charlie` | `+10000000003` | `password123` | `USER` | WhatsApp Web Chat |
+1. Create a project and add a **PostgreSQL** database.
+2. Add a service from this GitHub repository. Railway builds it with the `Dockerfile`.
+3. In the service's **Variables**, set:
+   - `DATABASE_URL` = `${{Postgres.DATABASE_URL}}`
+   - `JWT_SECRET` = a long random string
+   - `NODE_ENV` = `production`
+4. In **Settings → Deploy**, leave **Custom Start Command** empty or set it to `sh start.sh`.
+5. In **Settings → Networking**, generate a public domain.
 
----
+Every push to `main` redeploys automatically. On start-up the container syncs the database schema, runs the seed (safe to repeat), then starts the server. Keep the service at one replica: presence and socket rooms are held in memory, so multiple replicas would need a Socket.io Redis adapter.
 
-## 🚂 Railway Deployment
+## Sample accounts
 
-Detailed instructions with screenshots and environment variable bindings are available in [RAILWAY_DEPLOYMENT_GUIDE.md](file:///C:/Users/palas/Desktop/ChatApp_Clone/RAILWAY_DEPLOYMENT_GUIDE.md).
+The seed creates these accounts so you can try the app straight away. They use public passwords, so **remove them before inviting real users**:
+
+1. Register your own account, sign in as `admin`, and use **Admin → Users** to make your account an admin.
+2. In Railway, add the variable `SEED_DEMO_DATA` = `false` so the sample data is no longer recreated on each deploy.
+3. Sign in with your own account and delete `admin`, `alice`, `bob`, and `charlie` from **Admin → Users**.
+
+| Username | Password | Role |
+|---|---|---|
+| `admin` | `admin123` | Admin |
+| `alice` | `password123` | User |
+| `bob` | `password123` | User |
+| `charlie` | `password123` | User |

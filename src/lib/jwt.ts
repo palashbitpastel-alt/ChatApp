@@ -4,7 +4,7 @@ import { Role } from "@/types";
 // Shared by Next.js API routes and the custom Socket.io server (server.ts),
 // so it must not import anything Next-specific.
 export const JWT_SECRET = process.env.JWT_SECRET || "super-secret-jwt-key-change-in-production-chatapp";
-export const COOKIE_NAME = "wa_session";
+export const COOKIE_NAME = "chat_session";
 
 export interface TokenPayload {
   userId: string;

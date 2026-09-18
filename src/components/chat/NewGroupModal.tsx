@@ -96,16 +96,16 @@ export default function NewGroupModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-[#111b21] border border-[#222e35] rounded-xl w-full max-w-md overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+      <div className="bg-[#11141b] border border-[#262b36] rounded-xl w-full max-w-md overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-150">
         {/* Header */}
-        <div className="bg-[#202c33] px-4 py-3.5 flex items-center justify-between border-b border-[#222e35]">
+        <div className="bg-[#1a1e27] px-4 py-3.5 flex items-center justify-between border-b border-[#262b36]">
           <div className="flex items-center space-x-2">
-            <Users className="w-5 h-5 text-[#00a884]" />
-            <h2 className="text-[#e9edef] font-medium text-lg">Create New Group</h2>
+            <Users className="w-5 h-5 text-[#818cf8]" />
+            <h2 className="text-[#e8eaf0] font-medium text-lg">Create New Group</h2>
           </div>
           <button
             onClick={onClose}
-            className="text-[#aebac1] hover:text-white p-1 rounded-full hover:bg-[#2a3942] transition-colors"
+            className="text-[#b4bac8] hover:text-white p-1 rounded-full hover:bg-[#232835] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -115,7 +115,7 @@ export default function NewGroupModal({
           <div className="p-4 space-y-4">
             {/* Group Name input */}
             <div>
-              <label className="block text-xs font-semibold text-[#8696a0] uppercase mb-1.5">
+              <label className="block text-xs font-semibold text-[#8b93a7] uppercase mb-1.5">
                 Group Subject
               </label>
               <input
@@ -125,34 +125,34 @@ export default function NewGroupModal({
                 placeholder="Type group subject..."
                 maxLength={40}
                 required
-                className="w-full bg-[#202c33] border border-[#222e35] rounded-lg px-3.5 py-2.5 text-sm text-[#e9edef] placeholder-[#8696a0] focus:outline-none focus:border-[#00a884] transition-colors"
+                className="w-full bg-[#1a1e27] border border-[#262b36] rounded-lg px-3.5 py-2.5 text-sm text-[#e8eaf0] placeholder-[#8b93a7] focus:outline-none focus:border-[#6366f1] transition-colors"
               />
             </div>
 
             {/* Member selection count */}
-            <div className="flex items-center justify-between text-xs text-[#8696a0]">
+            <div className="flex items-center justify-between text-xs text-[#8b93a7]">
               <span>Add Group Participants</span>
               <span>{selectedUserIds.size} selected</span>
             </div>
 
             {/* Search filter */}
-            <div className="relative bg-[#202c33] rounded-lg flex items-center px-3 py-1.5 focus-within:ring-1 focus-within:ring-[#00a884]">
-              <Search className="w-4 h-4 text-[#8696a0] mr-2 flex-shrink-0" />
+            <div className="relative bg-[#1a1e27] rounded-lg flex items-center px-3 py-1.5 focus-within:ring-1 focus-within:ring-[#6366f1]">
+              <Search className="w-4 h-4 text-[#8b93a7] mr-2 flex-shrink-0" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search contacts..."
-                className="bg-transparent text-sm text-[#e9edef] placeholder-[#8696a0] outline-none w-full"
+                className="bg-transparent text-sm text-[#e8eaf0] placeholder-[#8b93a7] outline-none w-full"
               />
             </div>
 
             {/* Contact list */}
-            <div className="max-h-56 overflow-y-auto divide-y divide-[#202c33]/50 border border-[#222e35] rounded-lg bg-[#0b141a]/50">
+            <div className="max-h-56 overflow-y-auto divide-y divide-[#1a1e27]/50 border border-[#262b36] rounded-lg bg-[#0b0d12]/50">
               {isLoading ? (
-                <div className="py-6 text-center text-xs text-[#8696a0]">Loading contacts...</div>
+                <div className="py-6 text-center text-xs text-[#8b93a7]">Loading contacts...</div>
               ) : filteredUsers.length === 0 ? (
-                <div className="py-6 text-center text-xs text-[#8696a0]">No contacts available</div>
+                <div className="py-6 text-center text-xs text-[#8b93a7]">No contacts available</div>
               ) : (
                 filteredUsers.map((u) => {
                   const isSelected = selectedUserIds.has(u.id);
@@ -161,7 +161,7 @@ export default function NewGroupModal({
                       key={u.id}
                       onClick={() => toggleUserSelection(u.id)}
                       className={`px-3 py-2.5 flex items-center justify-between cursor-pointer transition-colors ${
-                        isSelected ? "bg-[#202c33]" : "hover:bg-[#202c33]/40"
+                        isSelected ? "bg-[#1a1e27]" : "hover:bg-[#1a1e27]/40"
                       }`}
                     >
                       <div className="flex items-center space-x-3 min-w-0">
@@ -170,7 +170,7 @@ export default function NewGroupModal({
                           <img
                             src={u.avatarUrl}
                             alt={u.username}
-                            className="w-9 h-9 rounded-full object-cover bg-[#202c33]"
+                            className="w-9 h-9 rounded-full object-cover bg-[#1a1e27]"
                           />
                         ) : (
                           <div
@@ -182,18 +182,18 @@ export default function NewGroupModal({
                           </div>
                         )}
                         <div className="truncate">
-                          <p className="text-sm font-medium text-[#e9edef] truncate">
+                          <p className="text-sm font-medium text-[#e8eaf0] truncate">
                             {u.username}
                           </p>
-                          <p className="text-xs text-[#8696a0] truncate">{u.phone}</p>
+                          <p className="text-xs text-[#8b93a7] truncate">{u.phone}</p>
                         </div>
                       </div>
 
                       <div
                         className={`w-5 h-5 rounded flex items-center justify-center border transition-colors ${
                           isSelected
-                            ? "bg-[#00a884] border-[#00a884] text-black"
-                            : "border-[#8696a0]/50"
+                            ? "bg-[#6366f1] border-[#6366f1] text-white"
+                            : "border-[#8b93a7]/50"
                         }`}
                       >
                         {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -206,18 +206,18 @@ export default function NewGroupModal({
           </div>
 
           {/* Footer actions */}
-          <div className="bg-[#202c33] px-4 py-3 flex items-center justify-end space-x-2 border-t border-[#222e35]">
+          <div className="bg-[#1a1e27] px-4 py-3 flex items-center justify-end space-x-2 border-t border-[#262b36]">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm text-[#8696a0] hover:text-[#e9edef] transition-colors"
+              className="px-4 py-2 text-sm text-[#8b93a7] hover:text-[#e8eaf0] transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={!groupName.trim() || selectedUserIds.size === 0 || isSubmitting}
-              className="px-4 py-2 bg-[#00a884] hover:bg-[#02906f] disabled:opacity-50 text-black font-semibold text-sm rounded-lg transition-colors flex items-center space-x-2"
+              className="px-4 py-2 bg-[#6366f1] hover:bg-[#4f46e5] disabled:opacity-50 text-white font-semibold text-sm rounded-lg transition-colors flex items-center space-x-2"
             >
               <span>{isSubmitting ? "Creating..." : "Create Group"}</span>
             </button>

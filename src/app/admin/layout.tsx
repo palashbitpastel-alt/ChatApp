@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { UserSummary } from "@/types";
 import Link from "next/link";
+import { BrandMark } from "@/components/brand/BrandLogo";
+import { APP_NAME } from "@/lib/brand";
 import {
   LayoutDashboard,
   Users,
@@ -47,9 +49,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   if (loading) {
     return (
-      <div className="h-dvh w-screen flex flex-col items-center justify-center bg-[#0b141a] text-[#00a884] space-y-3">
+      <div className="h-dvh w-screen flex flex-col items-center justify-center bg-[#0b0d12] text-[#818cf8] space-y-3">
         <Shield className="w-12 h-12 animate-pulse" />
-        <p className="text-xs text-[#8696a0] font-medium tracking-wide uppercase">
+        <p className="text-xs text-[#8b93a7] font-medium tracking-wide uppercase">
           Verifying Admin Credentials...
         </p>
       </div>
@@ -65,19 +67,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ];
 
   return (
-    <div className="flex h-dvh w-screen bg-[#0b141a] text-[#e9edef] overflow-hidden select-none">
+    <div className="flex h-dvh w-screen bg-[#0b0d12] text-[#e8eaf0] overflow-hidden select-none">
       {/* Admin Sidebar */}
-      <aside className="w-64 bg-[#111b21] border-r border-[#222e35] flex flex-col justify-between">
+      <aside className="w-64 bg-[#11141b] border-r border-[#262b36] flex flex-col justify-between">
         <div>
           {/* Admin Header */}
-          <div className="p-4 border-b border-[#222e35] flex items-center space-x-3 bg-[#202c33]/40">
-            <div className="p-2 bg-[#00a884]/20 text-[#00a884] rounded-lg">
-              <Shield className="w-5 h-5" />
-            </div>
+          <div className="p-4 border-b border-[#262b36] flex items-center space-x-3 bg-[#1a1e27]/40">
+            <BrandMark className="w-9 h-9" />
             <div>
-              <h1 className="font-semibold text-sm text-[#e9edef]">WhatsApp Admin</h1>
-              <p className="text-[11px] text-[#00a884] flex items-center">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00a884] mr-1.5 animate-ping" />
+              <h1 className="font-semibold text-sm text-[#e8eaf0]">{APP_NAME} Admin</h1>
+              <p className="text-[11px] text-[#818cf8] flex items-center">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#6366f1] mr-1.5 animate-ping" />
                 Live Control Panel
               </p>
             </div>
@@ -94,8 +94,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   href={item.href}
                   className={`flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all ${
                     isActive
-                      ? "bg-[#00a884] text-black font-semibold shadow"
-                      : "text-[#8696a0] hover:text-[#e9edef] hover:bg-[#202c33]"
+                      ? "bg-[#6366f1] text-white font-semibold shadow"
+                      : "text-[#8b93a7] hover:text-[#e8eaf0] hover:bg-[#1a1e27]"
                   }`}
                 >
                   <Icon className="w-4 h-4 flex-shrink-0" />
@@ -107,13 +107,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
 
         {/* Bottom actions */}
-        <div className="p-3 border-t border-[#222e35] space-y-1 bg-[#111b21]">
+        <div className="p-3 border-t border-[#262b36] space-y-1 bg-[#11141b]">
           <Link
             href="/"
-            className="flex items-center space-x-2.5 px-3 py-2 rounded-lg text-xs text-[#8696a0] hover:text-[#00a884] hover:bg-[#202c33] transition-colors"
+            className="flex items-center space-x-2.5 px-3 py-2 rounded-lg text-xs text-[#8b93a7] hover:text-[#818cf8] hover:bg-[#1a1e27] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Return to WhatsApp</span>
+            <span>Back to chats</span>
           </Link>
 
           <button
@@ -130,17 +130,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </aside>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col overflow-hidden bg-[#0c1317]">
+      <div className="flex-1 flex flex-col overflow-hidden bg-[#0b0d12]">
         {/* Top Navbar */}
-        <header className="h-14 bg-[#202c33] border-b border-[#222e35] px-6 flex items-center justify-between">
-          <div className="flex items-center space-x-2 text-xs text-[#8696a0]">
-            <Activity className="w-4 h-4 text-[#00a884]" />
+        <header className="h-14 bg-[#1a1e27] border-b border-[#262b36] px-6 flex items-center justify-between">
+          <div className="flex items-center space-x-2 text-xs text-[#8b93a7]">
+            <Activity className="w-4 h-4 text-[#818cf8]" />
             <span>Server Status: <strong className="text-emerald-400 font-semibold">Operational (Railway)</strong></span>
           </div>
 
           <div className="flex items-center space-x-3">
-            <span className="text-xs text-[#8696a0]">Logged in as</span>
-            <span className="text-xs font-semibold text-[#00a884] bg-[#00a884]/10 px-2.5 py-1 rounded-md border border-[#00a884]/30">
+            <span className="text-xs text-[#8b93a7]">Logged in as</span>
+            <span className="text-xs font-semibold text-[#818cf8] bg-[#6366f1]/10 px-2.5 py-1 rounded-md border border-[#6366f1]/30">
               {currentUser.username} (ADMIN)
             </span>
           </div>

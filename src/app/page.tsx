@@ -10,8 +10,10 @@ import NewChatModal from "@/components/chat/NewChatModal";
 import NewGroupModal from "@/components/chat/NewGroupModal";
 import ProfileModal from "@/components/chat/ProfileModal";
 import BroadcastBanner from "@/components/chat/BroadcastBanner";
+import { BrandMark } from "@/components/brand/BrandLogo";
+import { APP_NAME } from "@/lib/brand";
 
-function WhatsAppAppContent({
+function ChatAppContent({
   currentUser,
   onLogout,
 }: {
@@ -102,11 +104,11 @@ function WhatsAppAppContent({
   const selectedChat = chats.find((c) => c.id === selectedChatId) || null;
 
   return (
-    <div className="flex flex-col h-dvh w-screen bg-[#0c1317] overflow-hidden">
+    <div className="flex flex-col h-dvh w-screen bg-[#0b0d12] overflow-hidden">
       {/* Top Real-Time System Broadcast Alert Banner */}
       <BroadcastBanner />
 
-      {/* Main WhatsApp Window Container */}
+      {/* Main app container */}
       <div className="flex-1 flex overflow-hidden">
         {/* Sidebar: Always visible on desktop, hidden on mobile when a chat is open */}
         <div
@@ -202,18 +204,13 @@ export default function HomePage() {
 
   if (isLoading) {
     return (
-      <div className="h-dvh w-screen flex flex-col items-center justify-center bg-[#111b21] text-[#00a884] space-y-4">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-          alt="WhatsApp"
-          className="w-16 h-16 animate-pulse"
-        />
-        <div className="w-48 h-1 bg-[#202c33] rounded-full overflow-hidden">
-          <div className="h-full bg-[#00a884] animate-[shimmer_1.5s_infinite] w-2/3" />
+      <div className="h-dvh w-screen flex flex-col items-center justify-center bg-[#0b0d12] space-y-5">
+        <BrandMark className="w-14 h-14 animate-pulse" />
+        <div className="w-48 h-1 bg-[#1a1e27] rounded-full overflow-hidden">
+          <div className="h-full bg-[#6366f1] animate-[shimmer_1.5s_infinite] w-2/3" />
         </div>
-        <p className="text-xs text-[#8696a0] font-medium tracking-wide uppercase">
-          Loading WhatsApp Web...
+        <p className="text-xs text-[#8b93a7] font-medium tracking-wide">
+          Loading {APP_NAME}…
         </p>
       </div>
     );
@@ -223,7 +220,7 @@ export default function HomePage() {
 
   return (
     <SocketProvider currentUser={currentUser}>
-      <WhatsAppAppContent currentUser={currentUser} onLogout={handleLogout} />
+      <ChatAppContent currentUser={currentUser} onLogout={handleLogout} />
     </SocketProvider>
   );
 }

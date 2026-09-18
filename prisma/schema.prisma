@@ -31,7 +31,7 @@ model User {
   username      String            @unique
   passwordHash  String
   avatarUrl     String?
-  statusMessage String?           @default("Hey there! I am using WhatsApp.")
+  statusMessage String?           @default("Available")
   role          Role              @default(USER)
   isBanned      Boolean           @default(false)
   isOnline      Boolean           @default(false)

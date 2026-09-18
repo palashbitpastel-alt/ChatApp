@@ -77,12 +77,12 @@ export default function AdminBroadcastPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
-        <h2 className="text-xl font-bold text-[#e9edef] tracking-tight flex items-center space-x-2">
-          <Megaphone className="w-5 h-5 text-[#00a884]" />
+        <h2 className="text-xl font-bold text-[#e8eaf0] tracking-tight flex items-center space-x-2">
+          <Megaphone className="w-5 h-5 text-[#818cf8]" />
           <span>Real-Time System Broadcast</span>
         </h2>
-        <p className="text-xs text-[#8696a0] mt-1">
-          Broadcast global announcements across all active WhatsApp user windows in real time via
+        <p className="text-xs text-[#8b93a7] mt-1">
+          Broadcast global announcements to every connected user in real time via
           WebSockets.
         </p>
       </div>
@@ -107,12 +107,12 @@ export default function AdminBroadcastPage() {
       )}
 
       {/* Broadcast Composer Form */}
-      <div className="bg-[#111b21] border border-[#222e35] rounded-xl p-6 shadow-sm">
-        <h3 className="text-sm font-semibold text-[#e9edef] mb-4">Compose Announcement</h3>
+      <div className="bg-[#11141b] border border-[#262b36] rounded-xl p-6 shadow-sm">
+        <h3 className="text-sm font-semibold text-[#e8eaf0] mb-4">Compose Announcement</h3>
 
         <form onSubmit={handleSendBroadcast} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-[#8696a0] uppercase mb-1.5">
+            <label className="block text-xs font-semibold text-[#8b93a7] uppercase mb-1.5">
               Announcement Title / Tag
             </label>
             <input
@@ -121,12 +121,12 @@ export default function AdminBroadcastPage() {
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Scheduled Maintenance or Server Update"
               required
-              className="w-full bg-[#202c33] border border-[#222e35] rounded-lg px-3.5 py-2 text-sm text-[#e9edef] placeholder-[#8696a0] outline-none focus:border-[#00a884]"
+              className="w-full bg-[#1a1e27] border border-[#262b36] rounded-lg px-3.5 py-2 text-sm text-[#e8eaf0] placeholder-[#8b93a7] outline-none focus:border-[#6366f1]"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#8696a0] uppercase mb-1.5">
+            <label className="block text-xs font-semibold text-[#8b93a7] uppercase mb-1.5">
               Broadcast Message Content
             </label>
             <textarea
@@ -135,7 +135,7 @@ export default function AdminBroadcastPage() {
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Type your message here. All active users will immediately see an alert banner at the top of their screen."
               required
-              className="w-full bg-[#202c33] border border-[#222e35] rounded-lg px-3.5 py-2 text-sm text-[#e9edef] placeholder-[#8696a0] outline-none focus:border-[#00a884] resize-none"
+              className="w-full bg-[#1a1e27] border border-[#262b36] rounded-lg px-3.5 py-2 text-sm text-[#e8eaf0] placeholder-[#8b93a7] outline-none focus:border-[#6366f1] resize-none"
             />
           </div>
 
@@ -143,7 +143,7 @@ export default function AdminBroadcastPage() {
             <button
               type="submit"
               disabled={loading || !title.trim() || !message.trim()}
-              className="px-5 py-2.5 bg-[#00a884] hover:bg-[#02906f] disabled:opacity-50 text-black font-semibold text-xs rounded-lg transition-colors flex items-center space-x-2"
+              className="px-5 py-2.5 bg-[#6366f1] hover:bg-[#4f46e5] disabled:opacity-50 text-white font-semibold text-xs rounded-lg transition-colors flex items-center space-x-2"
             >
               <span>{loading ? "Transmitting..." : "Send Global Broadcast"}</span>
               <Send className="w-3.5 h-3.5" />
@@ -153,29 +153,29 @@ export default function AdminBroadcastPage() {
       </div>
 
       {/* Past Broadcasts List */}
-      <div className="bg-[#111b21] border border-[#222e35] rounded-xl p-6 space-y-4">
-        <h3 className="text-sm font-semibold text-[#e9edef] flex items-center space-x-2">
-          <Clock className="w-4 h-4 text-[#8696a0]" />
+      <div className="bg-[#11141b] border border-[#262b36] rounded-xl p-6 space-y-4">
+        <h3 className="text-sm font-semibold text-[#e8eaf0] flex items-center space-x-2">
+          <Clock className="w-4 h-4 text-[#8b93a7]" />
           <span>Past Broadcast History</span>
         </h3>
 
         {broadcasts.length === 0 ? (
-          <p className="text-xs text-[#8696a0] py-6 text-center">No broadcasts sent yet.</p>
+          <p className="text-xs text-[#8b93a7] py-6 text-center">No broadcasts sent yet.</p>
         ) : (
           <div className="space-y-3">
             {broadcasts.map((b) => (
               <div
                 key={b.id}
-                className="p-4 bg-[#202c33]/50 border border-[#222e35] rounded-lg space-y-1.5"
+                className="p-4 bg-[#1a1e27]/50 border border-[#262b36] rounded-lg space-y-1.5"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-[#00a884]">[{b.title}]</span>
-                  <span className="text-[11px] text-[#8696a0]">
+                  <span className="text-xs font-semibold text-[#818cf8]">[{b.title}]</span>
+                  <span className="text-[11px] text-[#8b93a7]">
                     {formatChatTimestamp(b.createdAt)}
                   </span>
                 </div>
-                <p className="text-sm text-[#e9edef]">{b.message}</p>
-                <p className="text-[10px] text-[#8696a0]">Sent by: @{b.sentBy.username}</p>
+                <p className="text-sm text-[#e8eaf0]">{b.message}</p>
+                <p className="text-[10px] text-[#8b93a7]">Sent by: @{b.sentBy.username}</p>
               </div>
             ))}
           </div>

@@ -353,7 +353,7 @@ app.prepare().then(() => {
   });
 
   httpServer.listen(port, hostname, () => {
-    console.log(`> 🚀 WhatsApp Clone Server ready on http://${hostname}:${port}`);
+    console.log(`> 🚀 ChatApp server ready on http://${hostname}:${port}`);
     console.log(`> ⚡ Socket.io listening on path: /api/socket/io`);
     console.log(`> 🌍 Environment: ${process.env.NODE_ENV || "development"}`);
   });

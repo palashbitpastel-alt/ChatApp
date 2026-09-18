@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { hashPassword, signToken, COOKIE_NAME } from "@/lib/auth";
+import { DEFAULT_STATUS } from "@/lib/brand";
 
 export async function POST(req: NextRequest) {
   try {
@@ -58,7 +59,7 @@ export async function POST(req: NextRequest) {
         phone: cleanPhone,
         passwordHash,
         avatarUrl,
-        statusMessage: statusMessage || "Hey there! I am using WhatsApp.",
+        statusMessage: statusMessage || DEFAULT_STATUS,
         role: "USER",
       },
     });

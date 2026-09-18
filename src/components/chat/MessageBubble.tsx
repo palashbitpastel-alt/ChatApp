@@ -32,7 +32,7 @@ export default function MessageBubble({
       {/* Emoji Reaction Popover on hover */}
       {showReactions && (
         <div
-          className={`absolute -top-9 z-20 flex items-center space-x-1.5 bg-[#233138] border border-[#2e3b43] px-2 py-1 rounded-full shadow-lg animate-in fade-in zoom-in-95 ${
+          className={`absolute -top-9 z-20 flex items-center space-x-1.5 bg-[#1f2430] border border-[#2c3240] px-2 py-1 rounded-full shadow-lg animate-in fade-in zoom-in-95 ${
             isSender ? "right-6" : "left-6"
           }`}
           onMouseLeave={() => setShowReactions(false)}
@@ -56,14 +56,14 @@ export default function MessageBubble({
       <div
         className={`relative max-w-[85%] sm:max-w-[70%] md:max-w-[65%] rounded-lg px-3 py-1.5 shadow-sm select-text ${
           isSender
-            ? "bg-[#005c4b] text-[#e9edef] rounded-tr-none"
-            : "bg-[#202c33] text-[#e9edef] rounded-tl-none"
+            ? "bg-[#4338ca] text-[#e8eaf0] rounded-tr-none"
+            : "bg-[#1a1e27] text-[#e8eaf0] rounded-tl-none"
         }`}
       >
         {/* Quick Reaction Button on message hover */}
         <button
           onClick={() => setShowReactions(!showReactions)}
-          className={`absolute top-1 opacity-0 group-hover:opacity-100 p-1 rounded-full bg-[#111b21]/70 hover:bg-[#111b21] text-[#8696a0] hover:text-[#e9edef] transition-opacity ${
+          className={`absolute top-1 opacity-0 group-hover:opacity-100 p-1 rounded-full bg-[#11141b]/70 hover:bg-[#11141b] text-[#8b93a7] hover:text-[#e8eaf0] transition-opacity ${
             isSender ? "-left-8" : "-right-8"
           }`}
           title="React to message"
@@ -99,10 +99,10 @@ export default function MessageBubble({
           <div className="flex items-center space-x-2 py-1.5 pr-4">
             <span className="text-xl">🎤</span>
             <div className="flex-1">
-              <div className="h-1.5 bg-[#8696a0]/30 rounded-full w-32 overflow-hidden">
-                <div className="h-full bg-[#00a884] w-2/3" />
+              <div className="h-1.5 bg-[#8b93a7]/30 rounded-full w-32 overflow-hidden">
+                <div className="h-full bg-[#6366f1] w-2/3" />
               </div>
-              <span className="text-[10px] text-[#8696a0]">0:14 • Voice Note</span>
+              <span className="text-[10px] text-[#8b93a7]">0:14 • Voice Note</span>
             </div>
           </div>
         )}
@@ -113,16 +113,16 @@ export default function MessageBubble({
             {message.content}
           </span>
 
-          <div className="flex items-center space-x-1 ml-auto pt-0.5 select-none text-[11px] text-[#8696a0] flex-shrink-0">
+          <div className="flex items-center space-x-1 ml-auto pt-0.5 select-none text-[11px] text-[#8b93a7] flex-shrink-0">
             <span>{formatMessageTime(message.createdAt)}</span>
             {isSender && (
               <span>
                 {message.status === "READ" ? (
-                  <CheckCheck className="w-3.5 h-3.5 text-[#53bdeb]" />
+                  <CheckCheck className="w-3.5 h-3.5 text-[#7dd3fc]" />
                 ) : message.status === "DELIVERED" ? (
-                  <CheckCheck className="w-3.5 h-3.5 text-[#8696a0]" />
+                  <CheckCheck className="w-3.5 h-3.5 text-[#8b93a7]" />
                 ) : (
-                  <Check className="w-3.5 h-3.5 text-[#8696a0]" />
+                  <Check className="w-3.5 h-3.5 text-[#8b93a7]" />
                 )}
               </span>
             )}
@@ -134,7 +134,7 @@ export default function MessageBubble({
           <div
             className={`absolute -bottom-3 ${
               isSender ? "right-2" : "left-2"
-            } flex items-center bg-[#233138] border border-[#2e3b43] rounded-full px-1.5 py-0.5 shadow space-x-1`}
+            } flex items-center bg-[#1f2430] border border-[#2c3240] rounded-full px-1.5 py-0.5 shadow space-x-1`}
           >
             {Array.from(new Set(message.reactions.map((r) => r.emoji))).map((emoji) => (
               <span key={emoji} className="text-xs">
@@ -142,7 +142,7 @@ export default function MessageBubble({
               </span>
             ))}
             {message.reactions.length > 1 && (
-              <span className="text-[10px] text-[#8696a0] font-semibold">
+              <span className="text-[10px] text-[#8b93a7] font-semibold">
                 {message.reactions.length}
               </span>
             )}
