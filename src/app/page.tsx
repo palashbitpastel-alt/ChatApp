@@ -102,7 +102,7 @@ function WhatsAppAppContent({
   const selectedChat = chats.find((c) => c.id === selectedChatId) || null;
 
   return (
-    <div className="flex flex-col h-screen w-screen bg-[#0c1317] overflow-hidden">
+    <div className="flex flex-col h-dvh w-screen bg-[#0c1317] overflow-hidden">
       {/* Top Real-Time System Broadcast Alert Banner */}
       <BroadcastBanner />
 
@@ -202,7 +202,7 @@ export default function HomePage() {
 
   if (isLoading) {
     return (
-      <div className="h-screen w-screen flex flex-col items-center justify-center bg-[#111b21] text-[#00a884] space-y-4">
+      <div className="h-dvh w-screen flex flex-col items-center justify-center bg-[#111b21] text-[#00a884] space-y-4">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"

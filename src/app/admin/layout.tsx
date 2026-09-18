@@ -47,7 +47,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   if (loading) {
     return (
-      <div className="h-screen w-screen flex flex-col items-center justify-center bg-[#0b141a] text-[#00a884] space-y-3">
+      <div className="h-dvh w-screen flex flex-col items-center justify-center bg-[#0b141a] text-[#00a884] space-y-3">
         <Shield className="w-12 h-12 animate-pulse" />
         <p className="text-xs text-[#8696a0] font-medium tracking-wide uppercase">
           Verifying Admin Credentials...
@@ -65,7 +65,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ];
 
   return (
-    <div className="flex h-screen w-screen bg-[#0b141a] text-[#e9edef] overflow-hidden select-none">
+    <div className="flex h-dvh w-screen bg-[#0b141a] text-[#e9edef] overflow-hidden select-none">
       {/* Admin Sidebar */}
       <aside className="w-64 bg-[#111b21] border-r border-[#222e35] flex flex-col justify-between">
         <div>

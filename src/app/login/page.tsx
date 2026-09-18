@@ -103,9 +103,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-screen bg-[#0c1317] flex flex-col items-center select-none overflow-y-auto">
+    <div className="h-dvh w-screen bg-[#0c1317] flex flex-col items-center select-none overflow-y-auto">
       {/* Top WhatsApp Web Green Banner */}
-      <div className="w-full bg-[#00a884] h-52 flex items-start px-6 md:px-16 pt-7 shadow-md">
+      <div className="w-full shrink-0 bg-[#00a884] h-52 flex items-start px-6 md:px-16 pt-7 shadow-md">
         <div className="flex items-center space-x-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -120,7 +120,7 @@ export default function LoginPage() {
       </div>
 
       {/* Login Card overlay */}
-      <div className="-mt-32 mb-12 w-[92%] max-w-4xl bg-[#111b21] border border-[#222e35] rounded-2xl shadow-2xl p-6 md:p-10 flex flex-col md:flex-row gap-8 z-10 animate-in fade-in zoom-in-95">
+      <div className="shrink-0 -mt-32 mb-12 w-[92%] max-w-4xl bg-[#111b21] border border-[#222e35] rounded-2xl shadow-2xl p-6 md:p-10 flex flex-col md:flex-row gap-8 z-10 animate-in fade-in zoom-in-95">
         {/* Left column: Quick Accounts & Instructions */}
         <div className="flex-1 space-y-6 md:pr-4 md:border-r md:border-[#222e35]">
           <div>
