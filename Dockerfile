@@ -35,12 +35,11 @@ COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/server.ts ./server.ts
 COPY --from=builder /app/src ./src
 COPY --from=builder /app/tsconfig.json ./tsconfig.json
+COPY --from=builder /app/start.sh ./start.sh
 
 USER nextjs
 
 EXPOSE 3000
 
-# Push DB schema, run seed on startup, and launch unified Next.js + Socket.io server.
-# --skip-generate: the client was generated at build time and node_modules isn't writable by this user.
-# exec: node becomes PID 1's child directly so it receives Railway's SIGTERM on redeploy.
-CMD ["sh", "-c", "./node_modules/.bin/prisma db push --skip-generate && ./node_modules/.bin/tsx prisma/seed.ts && exec ./node_modules/.bin/tsx server.ts"]
+# Push DB schema, run seed, and launch the unified Next.js + Socket.io server
+CMD ["sh", "start.sh"]
