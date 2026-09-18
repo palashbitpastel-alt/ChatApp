@@ -1,0 +1,119 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  AUDIO
+  FILE
+}
+
+enum MessageStatus {
+  SENT
+  DELIVERED
+  READ
+}
+
+model User {
+  id            String            @id @default(cuid())
+  phone         String            @unique
+  username      String            @unique
+  passwordHash  String
+  avatarUrl     String?
+  statusMessage String?           @default("Hey there! I am using WhatsApp.")
+  role          Role              @default(USER)
+  isBanned      Boolean           @default(false)
+  isOnline      Boolean           @default(false)
+  lastSeen      DateTime          @default(now())
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  participants  ChatParticipant[]
+  messages      Message[]
+  reactions     MessageReaction[]
+  broadcasts    SystemBroadcast[]
+
+  @@index([phone])
+  @@index([username])
+}
+
+model Chat {
+  id           String            @id @default(cuid())
+  isGroup      Boolean           @default(false)
+  name         String?
+  avatarUrl    String?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  participants ChatParticipant[]
+  messages     Message[]
+
+  @@index([updatedAt])
+}
+
+model ChatParticipant {
+  id        String   @id @default(cuid())
+  chatId    String
+  userId    String
+  role      String   @default("MEMBER")
+  joinedAt  DateTime @default(now())
+
+  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([chatId, userId])
+  @@index([userId])
+  @@index([chatId])
+}
+
+model Message {
+  id        String            @id @default(cuid())
+  chatId    String
+  senderId  String
+  content   String
+  type      MessageType       @default(TEXT)
+  mediaUrl  String?
+  status    MessageStatus     @default(SENT)
+  createdAt DateTime          @default(now())
+
+  chat      Chat              @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  sender    User              @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  reactions MessageReaction[]
+
+  @@index([chatId, createdAt])
+  @@index([senderId])
+}
+
+model MessageReaction {
+  id        String   @id @default(cuid())
+  messageId String
+  userId    String
+  emoji     String
+  createdAt DateTime @default(now())
+
+  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([messageId, userId])
+}
+
+model SystemBroadcast {
+  id        String   @id @default(cuid())
+  title     String
+  message   String
+  sentById  String
+  createdAt DateTime @default(now())
+
+  sentBy    User     @relation(fields: [sentById], references: [id], onDelete: Cascade)
+}
