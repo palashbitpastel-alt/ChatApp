@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await getSessionUser(req);
@@ -14,7 +14,7 @@ export async function GET(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const chatId = params.id;
+    const { id: chatId } = await params;
 
     // Verify user is a participant of this chat
     const isParticipant = await prisma.chatParticipant.findUnique({
@@ -82,7 +82,7 @@ export async function GET(
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await getSessionUser(req);
@@ -90,7 +90,7 @@ export async function POST(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const chatId = params.id;
+    const { id: chatId } = await params;
     const { content, type = "TEXT", mediaUrl } = await req.json();
 
     if (!content && !mediaUrl) {
