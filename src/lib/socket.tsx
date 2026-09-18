@@ -68,11 +68,16 @@ export function SocketProvider({
       reconnection: true,
       reconnectionAttempts: 10,
       reconnectionDelay: 1000,
+      withCredentials: true,
     });
 
+    // The server authenticates the socket from the httpOnly session cookie.
     socketInstance.on("connect", () => {
       setIsConnected(true);
-      socketInstance.emit("auth:identify", currentUser.id);
+    });
+
+    socketInstance.on("connect_error", (err) => {
+      console.error("Socket connection error:", err.message);
     });
 
     socketInstance.on("disconnect", () => {
@@ -135,7 +140,7 @@ export function SocketProvider({
   }, [currentUser?.id]);
 
   const joinChat = (chatId: string) => {
-    if (socket && isConnected) {
+    if (socket) {
       socket.emit("chat:join", chatId);
     }
   };

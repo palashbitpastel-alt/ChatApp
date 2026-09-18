@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { UserSummary, ChatItem, MessageItem } from "@/types";
 import { SocketProvider, useSocket } from "@/lib/socket";
@@ -24,6 +24,8 @@ function WhatsAppAppContent({
   const [newGroupOpen, setNewGroupOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const { socket } = useSocket();
+  const chatsRef = useRef<ChatItem[]>([]);
+  chatsRef.current = chats;
 
   // Load user's chats
   const fetchChats = useCallback(async () => {
@@ -47,6 +49,11 @@ function WhatsAppAppContent({
     if (!socket) return;
 
     const handleNewMessage = (msg: MessageItem) => {
+      // A chat someone else just started with us isn't in the list yet
+      if (!chatsRef.current.some((c) => c.id === msg.chatId)) {
+        fetchChats();
+        return;
+      }
       setChats((prevChats) => {
         return prevChats.map((c) => {
           if (c.id === msg.chatId) {
@@ -69,7 +76,7 @@ function WhatsAppAppContent({
     return () => {
       socket.off("message:new", handleNewMessage);
     };
-  }, [socket, selectedChatId, currentUser.id]);
+  }, [socket, selectedChatId, currentUser.id, fetchChats]);
 
   const handleSelectChat = (chat: ChatItem) => {
     setSelectedChatId(chat.id);

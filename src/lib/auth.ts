@@ -1,19 +1,11 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 import { prisma } from "./prisma";
-import { Role } from "@/types";
+import { COOKIE_NAME, signToken, verifyToken, TokenPayload } from "./jwt";
 
-const JWT_SECRET = process.env.JWT_SECRET || "super-secret-jwt-key-change-in-production-chatapp";
-const COOKIE_NAME = "wa_session";
-
-export interface TokenPayload {
-  userId: string;
-  phone: string;
-  username: string;
-  role: Role;
-}
+export { signToken, verifyToken };
+export type { TokenPayload };
 
 export async function hashPassword(password: string): Promise<string> {
   return bcrypt.hash(password, 10);
@@ -21,18 +13,6 @@ export async function hashPassword(password: string): Promise<string> {
 
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
   return bcrypt.compare(password, hash);
-}
-
-export function signToken(payload: TokenPayload): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: "30d" });
-}
-
-export function verifyToken(token: string): TokenPayload | null {
-  try {
-    return jwt.verify(token, JWT_SECRET) as TokenPayload;
-  } catch {
-    return null;
-  }
 }
 
 export async function getCurrentUserFromCookies(): Promise<TokenPayload | null> {

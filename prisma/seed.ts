@@ -65,6 +65,12 @@ async function main() {
 
   console.log("✅ Users created: admin, alice, bob, charlie");
 
+  // Seed runs on every container start (see Dockerfile), so only create sample chats once
+  if ((await prisma.chat.count()) > 0) {
+    console.log("⏭️  Chats already exist, skipping sample chats");
+    return;
+  }
+
   // 2. Create 1-on-1 Chat between Alice and Bob
   const directChat = await prisma.chat.create({
     data: {

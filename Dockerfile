@@ -24,7 +24,8 @@ ENV PORT=3000
 
 # Create a non-root user for security
 RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN adduser --system --uid 1001 --home /home/nextjs nextjs
+ENV HOME=/home/nextjs
 
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/node_modules ./node_modules
@@ -39,5 +40,7 @@ USER nextjs
 
 EXPOSE 3000
 
-# Push DB schema, run seed on startup, and launch unified Next.js + Socket.io server
-CMD ["sh", "-c", "npx prisma db push && npx tsx prisma/seed.ts && npx tsx server.ts"]
+# Push DB schema, run seed on startup, and launch unified Next.js + Socket.io server.
+# --skip-generate: the client was generated at build time and node_modules isn't writable by this user.
+# exec: node becomes PID 1's child directly so it receives Railway's SIGTERM on redeploy.
+CMD ["sh", "-c", "./node_modules/.bin/prisma db push --skip-generate && ./node_modules/.bin/tsx prisma/seed.ts && exec ./node_modules/.bin/tsx server.ts"]
